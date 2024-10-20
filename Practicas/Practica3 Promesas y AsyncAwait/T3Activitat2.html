@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Presupuesto PC</title>
+</head>
+<body>
+    <h3>Selecciona los componentes</h3>
+
+    <!-- Procesador -->
+    <h4>Procesador</h4>
+    <input type="radio" name="procesador" value="380"> Intel i7 11700k - 380€<br>
+    <input type="radio" name="procesador" value="400"> AMD Ryzen 7 5800x - 400€<br>
+    <input type="radio" name="procesador" value="200"> ARM - 200€<br>
+
+    <!-- Caja -->
+    <h4>Caja</h4>
+    <input type="radio" name="caja" value="100"> Caja Genérica - 100€<br>
+    <input type="radio" name="caja" value="150"> Caja Gaming - 150€<br>
+    <input type="radio" name="caja" value="80"> Caja MicroATX - 80€<br>
+
+    <!-- Refrigeración -->
+    <h4>Refrigeración</h4>
+    <input type="radio" name="refrigeracion" value="50"> Ventilador Genérico - 50€<br>
+    <input type="radio" name="refrigeracion" value="70"> Ventilador Gaming - 70€<br>
+    <input type="radio" name="refrigeracion" value="90"> Refrigeración Líquida - 90€<br>
+
+    <button onclick="calcularPresupuesto()">Calcular Presupuesto</button>
+
+    <h4>Presupuesto</h4>
+    <table id="tabla">
+        <thead>
+            <tr>
+                <th>Procesador</th>
+                <th>Caja</th>
+                <th>Refrigeración</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody id="resultado"></tbody>
+    </table>
+
+    <script>
+        function calcularPresupuesto() {
+            const procesador = document.querySelector('input[name="procesador"]:checked');
+            const caja = document.querySelector('input[name="caja"]:checked');
+            const refrigeracion = document.querySelector('input[name="refrigeracion"]:checked');
+
+            let total = 0;
+            let tabla = '';
+
+            if (procesador) {
+                tabla += `<td>${procesador.nextSibling.textContent}</td>`;
+                total += parseInt(procesador.value, 10);
+            } else {
+                tabla += '<td>Sin seleccionar</td>';
+            }
+
+            if (caja) {
+                tabla += `<td>${caja.nextSibling.textContent}</td>`;
+                total += parseInt(caja.value, 10);
+            } else {
+                tabla += '<td>Sin seleccionar</td>';
+            }
+
+            if (refrigeracion) {
+                tabla += `<td>${refrigeracion.nextSibling.textContent}</td>`;
+                total += parseInt(refrigeracion.value, 10);
+            } else {
+                tabla += '<td>Sin seleccionar</td>';
+            }
+
+            tabla += `<td>${total}€</td>`;
+
+            document.getElementById('resultado').innerHTML = `<tr>${tabla}</tr>`;
+        }
+    </script>
+</body>
+</html>
