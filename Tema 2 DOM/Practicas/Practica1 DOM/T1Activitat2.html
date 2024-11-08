@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Manipulación de listas</title>
+  <script>
+    function anadirElemento() {
+      const nuevoElemento = document.createElement('li');
+      nuevoElemento.textContent = 'Nuevo elemento añadido';
+      document.getElementById('listaelemen').appendChild(nuevoElemento);
+    }
+
+    function insertarElemento() {
+      const nuevoElemento = document.createElement('li');
+      nuevoElemento.textContent = 'Elemento insertado';
+      const primerElemento = document.querySelector('#listaelemen li');
+      primerElemento.parentNode.insertBefore(nuevoElemento, primerElemento.nextSibling);
+    }
+
+    function reemplazarElemento() {
+      const segundoElemento = document.querySelectorAll('#listaelemen li')[1];
+      if (segundoElemento) {
+        const elementoReemplazado = document.createElement('li');
+        elementoReemplazado.textContent = 'Elemento reemplazado';
+        segundoElemento.parentNode.replaceChild(elementoReemplazado, segundoElemento);
+      } else {
+        alert('No hay un segundo elemento para reemplazar.');
+      }
+    }
+
+    function borrarElemento() {
+      const segundoElemento = document.querySelectorAll('#listaelemen li')[1];
+      if (segundoElemento) {
+        segundoElemento.parentNode.removeChild(segundoElemento);
+      } else {
+        alert('No hay un elemento para borrar.');
+      }
+    }
+
+    function clonarLista() {
+      const listaOriginal = document.getElementById('listaelemen');
+      const clon = listaOriginal.cloneNode(true);
+      document.body.appendChild(clon);
+    }
+
+    function crearSublistaDOM() {
+      const sublista = document.createElement('ul');
+      const item = document.createElement('li');
+      item.textContent = 'Subelemento de Sandbox';
+      sublista.appendChild(item);
+      document.querySelector('#listaelemen li').appendChild(sublista);
+    }
+
+    function crearSublistaInnerHTML() {
+      const sandbox = document.querySelector('#listaelemen li');
+      sandbox.innerHTML += '<ul><li>Subelemento de Sandbox (innerHTML)</li></ul>';
+    }
+  </script>
+</head>
+<body>
+  <h1>VIDEOJUEGOS</h1>
+  <ul id="listaelemen">
+    <li>Sandbox</li>
+    <li>Deportes</li>
+    <li>RPG</li>
+  </ul>
+  <button onclick="anadirElemento()">Añadir nuevo elemento</button>
+  <button onclick="insertarElemento()">Insertar nuevo elemento</button>
+  <button onclick="reemplazarElemento()">Reemplazar elemento</button>
+  <button onclick="borrarElemento()">Borrar elemento</button>
+  <button onclick="clonarLista()">Clonar la lista completa</button>
+  <button onclick="crearSublistaDOM()">Crear sublista dentro de Sandbox con funciones DOM</button>
+  <button onclick="crearSublistaInnerHTML()">Crear sublista dentro de Sandbox con innerHTML</button>
+</body>
+</html>

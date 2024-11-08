@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    .draggable {
+      cursor: pointer;
+      position: absolute;
+    }
+  </style>
+</head>
+<body>
+  <div class="draggable" id="hero1" style="width: 100px; height: 100px; background: red;"></div>
+  <div class="draggable" id="hero2" style="width: 100px; height: 100px; background: blue;"></div>
+
+  <script>
+    document.addEventListener('mousedown', function(event) {
+      let target = event.target.closest('.draggable');
+      if (!target) return;
+
+      let shiftY = event.clientY - target.getBoundingClientRect().top;
+
+      function moveAt(pageY) {
+        let newTop = pageY - shiftY;
+        newTop = Math.max(0, Math.min(newTop, document.documentElement.clientHeight - target.offsetHeight));
+        target.style.top = newTop + 'px';
+      }
+
+      function onMouseMove(event) {
+        moveAt(event.pageY);
+      }
+
+      document.addEventListener('mousemove', onMouseMove);
+
+      document.onmouseup = function() {
+        document.removeEventListener('mousemove', onMouseMove);
+        document.onmouseup = null;
+      };
+
+      target.ondragstart = function() {
+        return false;
+      };
+    });
+  </script>
+</body>
+</html>

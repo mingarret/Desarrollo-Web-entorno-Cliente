@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Cambio de color de fondo</title>
+  <script>
+    function cambiarColor(color) {
+      document.getElementById('colorDiv').style.backgroundColor = color;
+    }
+  </script>
+</head>
+<body>
+  <div id="colorDiv" style="padding: 20px;">Bienvenido a esta página de test de colores</div>
+  <button onclick="cambiarColor('blue')">Azul</button>
+  <button onclick="cambiarColor('green')">Verde</button>
+  <button onclick="cambiarColor('white')">Restaurar color inicial</button>
+</body>
+</html>

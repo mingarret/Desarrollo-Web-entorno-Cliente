@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    .tooltip {
+      position: fixed;
+      z-index: 100;
+      padding: 10px 20px;
+      border: 1px solid #b3c9ce;
+      border-radius: 4px;
+      background: #fff;
+      box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+      color: #333;
+      font: italic 14px/1.3 sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <div data-tooltip="Aquí está el interior de la casa" id="house">Casa</div>
+  <div data-tooltip="Aquí está el techo" id="roof">Techo</div>
+  <p><a href="https://en.wikipedia.org/wiki/The_Three_Little_Pigs" data-tooltip="Continúa leyendo…">Colócate sobre mí</a></p>
+
+  <script>
+    document.addEventListener('mouseover', function(event) {
+      let tooltipElement = event.target.closest('[data-tooltip]');
+      if (!tooltipElement) return;
+
+      let tooltip = document.createElement('div');
+      tooltip.className = 'tooltip';
+      tooltip.innerText = tooltipElement.dataset.tooltip;
+      document.body.append(tooltip);
+
+      let coords = tooltipElement.getBoundingClientRect();
+      tooltip.style.left = coords.left + 'px';
+      tooltip.style.top = coords.bottom + 'px';
+
+      tooltipElement.onmouseout = function() {
+        tooltip.remove();
+      };
+    });
+  </script>
+</body>
+</html>

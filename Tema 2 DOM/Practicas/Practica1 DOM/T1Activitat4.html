@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Contador y referencia de enlaces</title>
+  <script>
+    function contarEnlaces() {
+      alert('Número total de enlaces: ' + document.getElementsByTagName('a').length);
+    }
+
+    function mostrarReferenciasEnlaces() {
+      const enlaces = document.getElementsByTagName('a');
+      let referencias = 'Referencias de los enlaces:\n';
+      for (let enlace of enlaces) {
+        referencias += enlace.href + '\n';
+      }
+      alert(referencias);
+    }
+
+    function mostrarReferenciasPorParrafo() {
+      const parrafos = document.getElementsByTagName('p');
+      let resultado = '';
+      for (let i = 0; i < parrafos.length; i++) {
+        const enlaces = parrafos[i].getElementsByTagName('a');
+        resultado += `Párrafo ${i + 1}:\n`;
+        for (let enlace of enlaces) {
+          resultado += enlace.href + '\n';
+        }
+        resultado += '\n';
+      }
+      alert(resultado);
+    }
+  </script>
+</head>
+<body>
+  <p>Primer párrafo con <a href="https://example.com/1">enlace 1</a>.</p>
+  <p>Segundo párrafo con <a href="https://example.com/2">enlace 2</a> y <a href="https://example.com/3">enlace 3</a>.</p>
+  <p>Tercer párrafo con <a href="https://example.com/4">enlace 4</a>, <a href="https://example.com/5">enlace 5</a> y <a href="https://example.com/6">enlace 6</a>.</p>
+  <button onclick="contarEnlaces()">Número de enlaces</button>
+  <button onclick="mostrarReferenciasEnlaces()">Referencia de enlaces</button>
+  <button onclick="mostrarReferenciasPorParrafo()">Referencia enlaces por párrafo</button>
+</body>
+</html>
