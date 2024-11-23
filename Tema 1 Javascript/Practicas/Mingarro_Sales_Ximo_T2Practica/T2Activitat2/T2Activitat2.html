@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividad 2 - Estación según el Mes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+            text-align: center;
+        }
+        select, button {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Actividad 2: Determinar la estación del año</h1>
+    <p>Selecciona un mes para conocer a qué estación pertenece:</p>
+
+    <!-- Selector del mes -->
+    <select id="mes">
+        <option value="" disabled selected>Selecciona un mes</option>
+        <option value="diciembre">Diciembre</option>
+        <option value="enero">Enero</option>
+        <option value="febrero">Febrero</option>
+        <option value="marzo">Marzo</option>
+        <option value="abril">Abril</option>
+        <option value="mayo">Mayo</option>
+        <option value="junio">Junio</option>
+        <option value="julio">Julio</option>
+        <option value="agosto">Agosto</option>
+        <option value="septiembre">Septiembre</option>
+        <option value="octubre">Octubre</option>
+        <option value="noviembre">Noviembre</option>
+    </select>
+    <br>
+    <button onclick="determinarEstacion()">Determinar Estación</button>
+
+    <!-- Resultado -->
+    <p id="result"></p>
+
+    <script>
+        function determinarEstacion() {
+            const mes = document.getElementById("mes").value;
+            const result = document.getElementById("result");
+
+            if (!mes) {
+                result.textContent = "Por favor, selecciona un mes.";
+                result.style.color = "red";
+                return;
+            }
+
+            let estacion = "";
+            switch (mes) {
+                case "diciembre":
+                case "enero":
+                case "febrero":
+                    estacion = "Invierno";
+                    break;
+                case "marzo":
+                case "abril":
+                case "mayo":
+                    estacion = "Primavera";
+                    break;
+                case "junio":
+                case "julio":
+                case "agosto":
+                    estacion = "Verano";
+                    break;
+                case "septiembre":
+                case "octubre":
+                case "noviembre":
+                    estacion = "Otoño";
+                    break;
+                default:
+                    estacion = "Mes no válido";
+            }
+
+            // Mostrar resultado
+            result.textContent = `El mes de ${mes} pertenece a la estación: ${estacion}`;
+            result.style.color = "green";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividad 6 - Suma de Números</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+            text-align: center;
+        }
+        input, button {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        #result.error {
+            color: red;
+        }
+        #result.success {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>Actividad 6: Suma de números ingresados</h1>
+    <p>Introduce números en los campos y presiona "Calcular Suma".</p>
+
+    <!-- Contenedor de inputs -->
+    <div id="inputs-container">
+        <input type="number" placeholder="Introduce un número" />
+    </div>
+
+    <!-- Botones -->
+    <button id="add-input">Añadir otro número</button>
+    <button id="calculate-sum">Calcular Suma</button>
+
+    <!-- Resultado -->
+    <p id="result"></p>
+
+    <script>
+        const container = document.getElementById("inputs-container");
+        const addInputBtn = document.getElementById("add-input");
+        const calculateSumBtn = document.getElementById("calculate-sum");
+        const result = document.getElementById("result");
+
+        // Función para añadir un nuevo campo de entrada
+        addInputBtn.addEventListener("click", () => {
+            const input = document.createElement("input");
+            input.type = "number";
+            input.placeholder = "Introduce un número";
+            container.appendChild(input);
+        });
+
+        // Función para calcular la suma de los números ingresados
+        calculateSumBtn.addEventListener("click", () => {
+            const inputs = container.querySelectorAll("input");
+            let numbers = [];
+
+            // Recoger valores de los inputs
+            inputs.forEach(input => {
+                const value = parseFloat(input.value);
+                if (!isNaN(value)) {
+                    numbers.push(value);
+                }
+            });
+
+            // Validación: verificar si hay números
+            if (numbers.length === 0) {
+                result.textContent = "No se ingresaron números válidos.";
+                result.className = "error";
+                return;
+            }
+
+            // Calcular la suma
+            const suma = numbers.reduce((total, num) => total + num, 0);
+
+            // Mostrar el resultado
+            result.textContent = `La suma de los números ingresados es: ${suma}`;
+            result.className = "success";
+        });
+    </script>
+</body>
+</html>

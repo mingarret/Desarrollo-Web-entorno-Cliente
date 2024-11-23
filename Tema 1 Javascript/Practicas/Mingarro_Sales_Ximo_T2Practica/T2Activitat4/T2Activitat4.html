@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividad 4 - Redimensionar Pantalla</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+            text-align: center;
+        }
+        button {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        #result.error {
+            color: red;
+        }
+        #result.success {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>Actividad 4: Redimensionar pantalla</h1>
+    <p>Haz clic en el botón para intentar redimensionar la pantalla si usas Google Chrome.</p>
+    <button onclick="redimensionarPantalla()">Redimensionar Pantalla</button>
+
+    <p id="result"></p>
+
+    <script>
+        function redimensionarPantalla() {
+            const navegador = navigator.userAgent; // Obtener el navegador del usuario
+            const result = document.getElementById("result");
+
+            // Verificar si es Google Chrome
+            if (navegador.includes("Chrome") && !navegador.includes("Edg")) {
+                // Redimensionar la ventana a 500x500
+                window.resizeTo(500, 500);
+                result.textContent = "Pantalla redimensionada correctamente a 500x500.";
+                result.className = "success";
+            } else {
+                // Mostrar mensaje de error
+                result.textContent = "Operación no permitida con este navegador. Usa Google Chrome.";
+                result.className = "error";
+            }
+        }
+    </script>
+</body>
+</html>

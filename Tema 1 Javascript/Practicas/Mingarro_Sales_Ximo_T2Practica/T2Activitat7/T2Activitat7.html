@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividad 7 - Calculadora Extensible</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+            text-align: center;
+        }
+        input, button {
+            margin: 10px 10px 20px;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        #result.error {
+            color: red;
+        }
+        #result.success {
+            color: green;
+        }
+        #new-operator {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Actividad 7: Calculadora Extensible</h1>
+    <p>Introduce dos números y un operador para realizar un cálculo.</p>
+
+    <!-- Inputs para la operación -->
+    <div>
+        <input id="num1" type="number" placeholder="Número 1" />
+        <input id="operador" type="text" placeholder="Operador (+, -, *, /, ...)" maxlength="2" />
+        <input id="num2" type="number" placeholder="Número 2" />
+        <br>
+        <button onclick="calcular()">Calcular</button>
+    </div>
+
+    <!-- Resultado -->
+    <p id="result"></p>
+
+    <!-- Formulario para agregar nuevos operadores -->
+    <div id="new-operator">
+        <h3>Agregar nuevo operador</h3>
+        <input id="newOpName" type="text" placeholder="Nuevo Operador" maxlength="2" />
+        <input id="newOpFunc" type="text" placeholder="Función: 'a + b'" />
+        <button onclick="addNewOperator()">Añadir Operador</button>
+    </div>
+
+    <!-- Mensaje para operadores -->
+    <p id="operatorMessage"></p>
+
+    <script>
+        // Constructor de la calculadora
+        function Calculator() {
+            this.operations = {
+                "+": (a, b) => a + b,
+                "-": (a, b) => a - b,
+                "*": (a, b) => a * b,
+                "/": (a, b) => b !== 0 ? a / b : "Error: División entre 0"
+            };
+        }
+
+        // Método para calcular
+        Calculator.prototype.calculate = function (expression) {
+            const [num1, operator, num2] = expression.split(" ");
+            const a = parseFloat(num1);
+            const b = parseFloat(num2);
+
+            if (isNaN(a) || isNaN(b)) return "Error: Entrada inválida.";
+
+            const operation = this.operations[operator];
+            return operation ? operation(a, b) : "Error: Operador no soportado.";
+        };
+
+        // Método para añadir nuevos operadores
+        Calculator.prototype.addMethod = function (name, func) {
+            this.operations[name] = func;
+        };
+
+        // Instancia de la calculadora
+        const calculator = new Calculator();
+
+        // Función para calcular con inputs
+        function calcular() {
+            const num1 = document.getElementById("num1").value;
+            const operador = document.getElementById("operador").value;
+            const num2 = document.getElementById("num2").value;
+            const result = document.getElementById("result");
+
+            // Construir la expresión en formato "número operador número"
+            const expression = `${num1} ${operador} ${num2}`;
+            const resultado = calculator.calculate(expression);
+
+            // Mostrar el resultado
+            if (typeof resultado === "string" && resultado.startsWith("Error")) {
+                result.textContent = resultado;
+                result.className = "error";
+            } else {
+                result.textContent = `El resultado de la operación es: ${resultado}`;
+                result.className = "success";
+            }
+        }
+
+        // Función para agregar nuevos operadores
+        function addNewOperator() {
+            const newOpName = document.getElementById("newOpName").value;
+            const newOpFunc = document.getElementById("newOpFunc").value;
+            const operatorMessage = document.getElementById("operatorMessage");
+
+            try {
+                // Crear una nueva función a partir del input
+                const func = new Function("a", "b", `return ${newOpFunc};`);
+                calculator.addMethod(newOpName, func);
+
+                operatorMessage.textContent = `Operador "${newOpName}" añadido con éxito.`;
+                operatorMessage.className = "success";
+            } catch (error) {
+                operatorMessage.textContent = "Error al añadir el operador. Asegúrate de que la función es válida.";
+                operatorMessage.className = "error";
+            }
+        }
+    </script>
+</body>
+</html>

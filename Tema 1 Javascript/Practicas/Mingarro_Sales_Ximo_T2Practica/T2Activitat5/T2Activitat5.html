@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividad 5 - Calculadora</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+            text-align: center;
+        }
+        input, select, button {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        #result.error {
+            color: red;
+        }
+        #result.success {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>Actividad 5: Calculadora</h1>
+    <p>Introduce dos números y selecciona una operación para realizar el cálculo.</p>
+
+    <!-- Inputs para los números -->
+    <input id="numA" type="number" placeholder="Introduce el primer número (a)" />
+    <br>
+    <input id="numB" type="number" placeholder="Introduce el segundo número (b)" />
+    <br>
+
+    <!-- Selector de operación -->
+    <select id="operacion">
+        <option value="" disabled selected>Selecciona una operación</option>
+        <option value="sum">Suma</option>
+        <option value="mul">Multiplicación</option>
+        <option value="rest">Resta</option>
+        <option value="divi">División</option>
+        <option value="modu">Módulo</option>
+    </select>
+    <br>
+    <button onclick="calcular()">Calcular</button>
+
+    <!-- Resultado -->
+    <p id="result"></p>
+
+    <script>
+        // Objeto calculadora
+        const calculator = {
+            a: 0,
+            b: 0,
+            read(a, b) {
+                this.a = a;
+                this.b = b;
+            },
+            sum() {
+                return this.a + this.b;
+            },
+            mul() {
+                return this.a * this.b;
+            },
+            rest() {
+                return this.a - this.b;
+            },
+            divi() {
+                if (this.b === 0) return "Error: División entre 0";
+                return this.a / this.b;
+            },
+            modu() {
+                if (this.b === 0) return "Error: División entre 0";
+                return this.a % this.b;
+            }
+        };
+
+        function calcular() {
+            const numA = parseFloat(document.getElementById("numA").value);
+            const numB = parseFloat(document.getElementById("numB").value);
+            const operacion = document.getElementById("operacion").value;
+            const result = document.getElementById("result");
+
+            // Reiniciar mensajes
+            result.textContent = "";
+            result.className = "";
+
+            // Validación de entrada
+            if (isNaN(numA) || isNaN(numB)) {
+                result.textContent = "Por favor, introduce valores numéricos válidos.";
+                result.className = "error";
+                return;
+            }
+            if (!operacion) {
+                result.textContent = "Por favor, selecciona una operación.";
+                result.className = "error";
+                return;
+            }
+
+            // Leer valores en el objeto calculator
+            calculator.read(numA, numB);
+
+            // Realizar operación
+            let resultado;
+            switch (operacion) {
+                case "sum":
+                    resultado = calculator.sum();
+                    break;
+                case "mul":
+                    resultado = calculator.mul();
+                    break;
+                case "rest":
+                    resultado = calculator.rest();
+                    break;
+                case "divi":
+                    resultado = calculator.divi();
+                    break;
+                case "modu":
+                    resultado = calculator.modu();
+                    break;
+                default:
+                    resultado = "Operación no válida.";
+            }
+
+            // Mostrar resultado
+            if (typeof resultado === "string" && resultado.startsWith("Error")) {
+                result.textContent = resultado;
+                result.className = "error";
+            } else {
+                result.textContent = `El resultado de la operación es: ${resultado}`;
+                result.className = "success";
+            }
+        }
+    </script>
+</body>
+</html>

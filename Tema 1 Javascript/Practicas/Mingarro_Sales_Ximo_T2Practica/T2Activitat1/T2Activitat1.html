@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividad 1 - IVA y Precio Total</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        input {
+            margin: 5px 0;
+        }
+        button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Actividad 1: Cálculo del precio total con IVA</h1>
+    <p>Introduce los precios de al menos 5 artículos. Haz clic en "Calcular" cuando termines.</p>
+    <div id="inputs-container">
+        <input type="number" step="0.01" placeholder="Introduce el precio de un artículo" />
+    </div>
+    <button id="add-input">Añadir otro precio</button>
+    <button id="calculate">Calcular Total</button>
+
+    <p id="result"></p>
+
+    <script>
+        const container = document.getElementById("inputs-container");
+        const addInputBtn = document.getElementById("add-input");
+        const calculateBtn = document.getElementById("calculate");
+        const result = document.getElementById("result");
+
+        // Añadir más inputs para precios
+        addInputBtn.addEventListener("click", () => {
+            const input = document.createElement("input");
+            input.type = "number";
+            input.step = "0.01";
+            input.placeholder = "Introduce el precio de un artículo";
+            container.appendChild(input);
+        });
+
+        // Calcular el total con IVA
+        calculateBtn.addEventListener("click", () => {
+            const inputs = container.querySelectorAll("input");
+            const IVA = 0.21;
+            let precios = [];
+
+            inputs.forEach(input => {
+                const value = parseFloat(input.value);
+                if (!isNaN(value) && value > 0) {
+                    precios.push(value);
+                }
+            });
+
+            if (precios.length < 5) {
+                result.textContent = "Debes introducir al menos 5 precios válidos.";
+                return;
+            }
+
+            const totalSinIVA = precios.reduce((suma, precio) => suma + precio, 0);
+            const totalConIVA = totalSinIVA * (1 + IVA);
+
+            result.innerHTML = `
+                <strong>Total sin IVA:</strong> ${totalSinIVA.toFixed(2)} €<br>
+                <strong>Total con IVA:</strong> ${totalConIVA.toFixed(2)} €
+            `;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividad 3 - Suma y Productoria</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+            text-align: center;
+        }
+        input, button {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        #error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Actividad 3: Suma y Productoria de Números</h1>
+    <p>Introduce dos números (<strong>a</strong> y <strong>b</strong>) y calcula su suma y productoria.</p>
+
+    <!-- Inputs para los números -->
+    <input id="numA" type="number" placeholder="Introduce el número a" />
+    <br>
+    <input id="numB" type="number" placeholder="Introduce el número b" />
+    <br>
+    <button onclick="calcularSumaYProductoria()">Calcular</button>
+
+    <!-- Mensajes -->
+    <p id="error"></p>
+    <p id="result"></p>
+
+    <script>
+        function calcularSumaYProductoria() {
+            const numA = parseInt(document.getElementById("numA").value);
+            const numB = parseInt(document.getElementById("numB").value);
+            const error = document.getElementById("error");
+            const result = document.getElementById("result");
+
+            // Reiniciar mensajes
+            error.textContent = "";
+            result.textContent = "";
+
+            // Validación de entrada
+            if (isNaN(numA) || isNaN(numB)) {
+                error.textContent = "Ambos valores deben ser números.";
+                return;
+            }
+            if (numA > numB) {
+                error.textContent = "Error: el número 'a' debe ser menor o igual que el número 'b'.";
+                return;
+            }
+
+            // Cálculo de la sumatoria
+            let sumatoria = 0;
+            for (let i = numA; i <= numB; i++) {
+                sumatoria += i;
+            }
+
+            // Cálculo de la productoria
+            let productoria = 1;
+            for (let i = numA; i <= numB; i++) {
+                productoria *= i;
+                if (productoria > 100) {
+                    result.innerHTML = `
+                        La <strong>sumatoria</strong> es: ${sumatoria}<br>
+                        La <strong>productoria</strong> excede 100 (valor parcial: ${productoria}).
+                    `;
+                    return;
+                }
+            }
+
+            // Mostrar resultados finales
+            result.innerHTML = `
+                La <strong>sumatoria</strong> es: ${sumatoria}<br>
+                La <strong>productoria</strong> es: ${productoria}
+            `;
+        }
+    </script>
+</body>
+</html>
